@@ -1,0 +1,26 @@
+{% if logs %}
+    
+	<table class="table table-striped  table-hover table-bordered" id="activity_log">
+		<thead class="thead-light">
+			<th class="no-sort">Activity</th><th>Date & Time</th>
+		</thead>
+		<tbody>
+			
+				{% for log in logs %}
+    				<tr>
+    					<td>
+    						    {{ log.message }}
+    					
+    					</td>
+                        <td>  {{ log.created_on }}</td>
+    				</tr>
+				{% endfor %}
+					
+		</tbody>
+	</table>
+
+{% else %}
+
+    <div class="no_res"> No Result Found </div>
+            
+{% endif %}

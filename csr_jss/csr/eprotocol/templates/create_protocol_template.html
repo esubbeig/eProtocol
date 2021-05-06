@@ -1,0 +1,46 @@
+<form  method="POST" data-url="{% url 'create_protocol_template' %}" class="create_prot_temp_form">
+
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="create_prot_temp_modalLabel">Add Template</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+     
+    <!-- <div class="form_wrp">
+      <small class="sml__hint">Name</small>
+    <input type="text" class="input_cn" placeholder="Template Name" name="name" autofocus required id="id_name" value="{{ form.data.name }}">
+    <small class="text-danger">{{ form.errors.name | striptags }}</small>
+    </div> -->
+
+    <div class="form_wrp">
+      <small class="sml__hint">Code</small>
+    <input type="text" class="input_cn" placeholder="Enter Code" name="code" autofocus required id="id_code" value="{{ form.data.code }}">
+    <small class="text-danger">{{ form.errors.code | striptags }}</small>
+    </div>
+
+    <div class="form_wrp">
+      <small class="sml__hint">Therapeutic Area</small>
+        <select name="therapeutic_area" class="input_cn chosen" id="id_therapeutic_area" required>
+            <option value="" disabled selected>Select Therapeutic Area</option>
+            {% for ele in therapeutic_area_list %}
+                <option value="{{ ele.id }}">{{ ele.therapeutic_area }}</option>
+            {% endfor %}
+        </select>
+        <small class="text-danger">{{ form.errors.therapeutic_area | striptags }}</small>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <button type="submit" class="frm_btn__">Add</button>
+  </div>
+    
+</form>
+

@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="section_template_modalLabel">{{ proj_sec.sec_heading }} - Template</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+
+	<div class="form_wrp">
+        <select class="input_cn chosen" id="section_temp_drodwn">
+            <option value="" selected>Select Template</option>
+            {% for ele in templates_list %}
+                <option value="{% url 'section_template_content' ele.id proj_sec.id %}">{{ ele.therapeutic_area.therapeutic_area }} - {{ ele.code }} - {{ ele.version_no }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="template_section_content">
+        
+    </div>
+
+	<div style="position: absolute;bottom: 5px;right:5px;">
+
+        <input type="button" class="copyToEditor" data-id="{{ proj_sec.id }}" value="Copy to Editor">
+		
+	</div>
+</div>

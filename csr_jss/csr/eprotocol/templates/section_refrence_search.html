@@ -1,0 +1,22 @@
+<div class="modal-header">
+	<h4>References</h4>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+
+	<p><b>Search the PubMed Database for Citations based on search terms, PubMed ID, title, author, etc.</b></p>
+
+	<div class="input-group mb-3">
+		<input type="hidden" name="" value="{{ prot_id }}" id="pro_idd">
+		<input type="hidden" name="" value="{{ sec_id }}" id="sec_idd">
+	  <input type="text" id="ref_search_text" class="form-control" placeholder="Search Terms..." name="ref_search_text" aria-label="Search Terms..." aria-describedby="basic-addon2" autocomplete="false">
+	  <div class="input-group-append">
+	    <button class="btn btn-outline-primary" data-url="{% url 'search_metapub' %}" type="button" id="ref_search_btn">Search</button>
+	  </div>
+	</div>
+
+	<div id="ref_search_results"></div>
+</div>

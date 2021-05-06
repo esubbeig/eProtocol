@@ -1,0 +1,50 @@
+{% load static %}
+
+{% if results.count > 0 %}
+
+	{% for each in results %}
+
+		<tr>
+         	<td>
+         		<a href="{% url 'project_dashboard' each.user.id each.project.id %}">
+	         		{{ each.project.project_name }}
+         		</a>
+         	</td>
+         	<td>
+         		{{ each.project.protocol_id }}
+         	</td>
+         	<td>
+         		{{ each.project.therapeutic_area.therapeutic_area }}
+         	</td>
+         	<td>
+         		{{ each.project.phase }}
+         	</td>
+         	<td>
+         		{{ each.project.client }}
+         	</td>
+         	<td>
+         		{{ each.project.created_on }}
+         	</td>
+            <td>
+                {% if each.project.generated == True %}
+                  Generated
+                {% else %}
+                  Not Generated
+                {% endif %}
+            </td>
+         	<td>
+
+                <a class="update-project"  data-url="{% url 'edit_user_project' each.user.id each.project.id %}">
+                    <img src="{% static 'images/edit__ic.png' %}" alt="" />
+                </a>
+              
+            </td>
+         </tr>
+
+	{% endfor %}
+
+{% else %}
+
+<tr><td colspan="9" style="text-align: center; vertical-align: middle;"><h4>No Result Found!</h4></td></tr>
+
+{% endif %}

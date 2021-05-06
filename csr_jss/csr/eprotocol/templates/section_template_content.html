@@ -1,0 +1,9 @@
+{% if sec_content.sec_content != 'nan' and sec_content.sec_content != None %}
+
+	{{ sec_content.sec_content|safe }}
+	
+{% else %}
+
+Template content does not exist.
+
+{% endif %}

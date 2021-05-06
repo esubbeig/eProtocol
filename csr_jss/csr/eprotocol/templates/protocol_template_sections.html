@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	<div class="container page-body-wrapper">
+		<div class="main-panel">
+		<div class="content-wrapper">
+
+			<div class="row">
+        		<div class="col-md-12 grid-margin">
+          			<div class="d-flex justify-content-between align-items-center">
+
+		            	<div>
+		              		<h4 class="mb-0 breadcrumb_">Edit Protocol Template Sections</h4>
+		                	<a href="{% url 'home' %}" class="bread__lnk">Home </a> / <a href="{% url 'manage_protocol_template' %}" class="bread__lnk">Manage Protocol Templates </a> / <label class="bread__lnk">Edit - {{ template.name }}</label>
+		            	</div>
+
+			            
+          			</div>
+        		</div>
+     		</div>
+
+     		<div class="row">
+	     		<div class="col-md-12">
+
+	     			<div class="accordion">
+	     				{% for each in template_sections %}
+
+						    <div class="accordion__header" data-url="">
+						        <h2>{{ each.sec_heading }}</h2>
+						        <span class="accordion__toggle"></span>
+						    </div>
+						    <div class="accordion__body">
+						        
+
+						        <form class="template_section_form" method="POST" data-href="{% url 'etemplate_sections' each.id %}" data-id="{{ each.id }}">
+									{% csrf_token %}
+
+									<textarea name="sec_content" id="id_sec_content-{{ each.id }}" class="ckeditor" rows="10" style="width:100%;">
+									{% if each.sec_content != 'nan' %}{{ each.sec_content|safe }} {% endif %}
+									</textarea>
+
+									<br>
+
+									<input type="submit" name="" class="btn btn-success" value="save">
+
+								</form>
+
+						    </div>
+
+	     				{% endfor %}
+	     			</div>
+	     			
+	     		</div>
+	     	</div>
+
+     	</div>
+     	</div>
+    </div>
+
+{% endblock %}

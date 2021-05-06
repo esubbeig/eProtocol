@@ -1,0 +1,33 @@
+<form method="POST" class="clone_eprotocol_form" data-url="{% url 'clone_eprotocol' prot_id %}">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title" id="clone_eprotocol_modalLabel">Clone Protocol</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="form_wrp">
+        <input type="text" name="code" required id="id_code"  value="{{ form.data.code }}"  class="input_cn" placeholder="Protocol Code">
+        <small class="text-danger">{{ form.errors.code | striptags }}</small>
+    </div>
+
+    <div class="form_wrp">
+        <input type="text" name="name" required id="id_name" value="{{ form.data.name }}"  class="input_cn" placeholder="Protocol Name">
+        <small class="text-danger">{{ form.errors.name | striptags }}</small>
+    </div>
+
+    <div class="form_wrp">
+        <input type="text" name="short_name" required id="id_short_name" value="{{ form.data.short_name }}" class="input_cn" placeholder="Protocol Short Name">
+        <small class="text-danger">{{ form.errors.short_name | striptags }}</small>
+    </div>
+    
+
+  </div>
+  <div class="modal-footer">
+     <button type="submit" class="frm_btn__">Clone eProtocol</button>   
+  </div>
+    
+
+</form>

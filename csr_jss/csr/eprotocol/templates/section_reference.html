@@ -1,0 +1,15 @@
+{% load filters %}
+
+{% if articles %}
+	{% for each in articles %}
+		<p>{{ each.citation }}</p>
+		<br>
+		<p>{{ each.title }}</p>
+		<p>Authors: {{ each.authors|list_to_str }}</p>
+		<p>PMID: {{ each.pmid }}</p>
+		<button class="btn btn-primary citation_import_btn" data-id="{{ sec_id }}" data-url="{% url 'citation_reference' each.pmid prot_id %}" style="position:relative;float:right;top: -35px;">Import Refrence</button>
+		<hr>
+	{% endfor %}
+{% else %}
+	<p>No data Found! Please try other keywords.</p>
+{% endif %}

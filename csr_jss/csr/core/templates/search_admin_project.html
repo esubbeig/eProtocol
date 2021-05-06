@@ -1,0 +1,51 @@
+{% load static %}
+
+{% if results.count > 0 %}
+
+	{% for each in results %}
+
+		<tr>
+         	<td>
+	         	<b>{{ each.project_name }}</b>
+         	</td>
+         	<td>
+         		{{ each.protocol_id }}
+         	</td>
+         	<td>
+         		{{ each.therapeutic_area.therapeutic_area }}
+         	</td>
+         	<td>
+         		{{ each.phase }}
+         	</td>
+         	<td>
+         		{{ each.client }}
+         	</td>
+         	<td>
+         		{{ each.created_on }}
+         	</td>
+            <td>
+                {{ each.created_by }}
+            </td>
+            <td>
+                {% if each.generated == True %}
+                  Generated
+                {% else %}
+                  Not Generated
+                {% endif %}
+            </td>
+         	<td>
+
+                <button type="button" class="assign__pro project_assigning" data-href="{% url 'assign_project' each.id %}" data-toggle="modal" data-target="#assign_project_modal-{{ each.id }}" id="project_assign_form"> 
+                    <span>Assign Project</span>
+                </button>
+              
+            </td>
+         </tr>
+
+	{% endfor %}
+
+{% else %}
+<tr><td colspan="9" style="text-align: center; vertical-align: middle;"><h4>No Result Found!</h4></td></tr>
+
+
+{% endif %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	<div class="container-fluid page-body-wrapper">
+  		<div class="main-panel">
+    		<div class="content-wrapper">
+
+    			<div class="row">
+	        		<div class="col-md-12 grid-margin">
+	          			<div class="d-flex justify-content-between align-items-center">
+
+			            	<div>
+			              		<h4 class="mb-0 breadcrumb_">Manage Protocol</h4>
+			                	<a href="{% url 'home' %}" class="bread__lnk">Home </a> / <label class="bread__lnk">Manage Protocol</label>
+			            	</div>
+
+				            <div>
+					  			
+					  			<button type="button" class="new_sub create__prj" data-href="{% url 'create_protocol_template' %}" data-toggle="modal" data-target="#create_prot_temp_modal" id="create_prot_temp_btn"><i class="ti-user"></i><span> Add Template</span></button>
+
+				            </div>
+	          			</div>
+	        		</div>
+	     		</div>
+
+	     		<div class="row">
+	     			<div class="col-md-12">
+	     				<table class="table table-hover table-striped table-bordered" id="eprotocol_templates_tbl">
+
+		                 	<thead class="thead-dark">
+		                    	<tr>
+		                      		<!-- <th>Template Name</th> -->
+		                      		<th>Code</th>
+		                      		<th>Therapeutic Area</th>
+				                    <th class="no-sort">Version</th>
+				                    <th class="no-sort">Created By</th>
+				                    <th>Created On</th>
+				                    <th>Updated On</th>
+				                    <th class="no-sort">Actions</th>
+		                    	</tr>
+		                  	</thead>
+		                  	<tbody>
+		                  		{% for each in templates_list %}
+		                  			<tr>
+		                  				<td>
+		                  					{% if not each.has_data %}
+		                  						<a data-toggle="modal" data-target="#import_prot_temp_data_modal" data-href="{% url 'add_etemplate_content' each.id %}" id="import_prot_temp_data_link">{{ each.code }}</a>
+		                  					{% else %}
+		                  						<a href="{% url 'view_etemplate_sections' each.id %}"> {{ each.code }} </a>
+		                  					{% endif %}
+		                  					
+		                  				</td>
+		                  				<!-- <td>{{ each.code }}</td> -->
+		                  				<td>{{ each.therapeutic_area.therapeutic_area }}</td>
+		                  				<td>{{ each.version_no }}</td>
+		                  				<td>{{ each.created_by }}</td>
+		                  				<td>{{ each.created_on }}</td>
+		                  				<td>{{ each.updated_on }}</td>
+		                  				<td>
+		                  					<a data-toggle="modal" data-target="#delete_etemplate_modal" data-href="{% url 'delete_etemplate' each.id %}" id="delete_etemplate_link" class="delete__"></a>
+		                  				</td>
+		                  			</tr>
+		                  		{% endfor %}
+		                  	</tbody>
+		                </table>
+	     			</div>
+	     		</div>
+
+    		</div>
+    	</div>
+    </div>
+
+    <!-- To create Template -->
+    <div class="modal fade" id="create_prot_temp_modal" tabindex="-1" role="dialog" aria-labelledby="create_prot_temp_modalLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+	      </div>
+	    </div>
+	</div>
+
+	<!-- Modal to import data from a file -->
+	<div class="modal fade" id="import_prot_temp_data_modal" tabindex="-1" role="dialog" aria-labelledby="import_prot_temp_data_modalLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+	      </div>
+	    </div>
+	</div>
+
+	<!-- Delete Template Confirmation Modal -->
+		<div class="modal fade" id="delete_etemplate_modal" tabindex="-1" role="dialog" aria-labelledby="delete_etemplate_modalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content" style="text-align: center;">
+			</div>
+
+		  </div>
+		</div>
+
+{% endblock %}

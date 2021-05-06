@@ -1,0 +1,40 @@
+<form  method="POST" action="{% url 'save_as_temp' prot_id %}">
+
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="save_as_temp_modalLabel">Add Template</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+
+    <div class="form_wrp">
+      <small class="sml__hint">Code</small>
+    <input type="text" class="input_cn" placeholder="Enter Code" name="temp_code" autofocus required id="id_temp_code" value="">
+    <small class="text-danger"></small>
+    </div>
+
+    <div class="form_wrp">
+      <small class="sml__hint">Therapeutic Area</small>
+        <select name="therapeutic_area" class="input_cn chosen" id="id_therapeutic_area" required>
+            <option value="" disabled selected>Select Therapeutic Area</option>
+            {% for ele in therapeutic_area_list %}
+                <option value="{{ ele.id }}">{{ ele.therapeutic_area }}</option>
+            {% endfor %}
+        </select>
+        <small class="text-danger"></small>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <button type="submit" class="frm_btn__" >Save</button>
+  </div>
+    
+</form>
+

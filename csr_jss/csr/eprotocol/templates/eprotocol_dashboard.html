@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load filters %}
+
+{% block content %}
+
+	<div class="container-fluid page-body-wrapper"> 
+		<div class="main-panel">
+			<div class="content-wrapper">
+
+				<div class="row">
+					<div class="col-md-12 grid-margin">
+						<div class="d-flex justify-content-between align-items-center">
+							<div>
+								<h4 class="mb-0 breadcrumb_">{{ protocol.name }}</h4>
+							  	<a href="{% url 'home' %}" class="bread__lnk">Home </a> / <label class="bread__lnk">Projects</label> / <label class="bread__lnk">{{ protocol.code }}</label>
+						  	</div>
+
+						  	<div>
+					  			
+					  			<button type="button" class="new_sub create__prj" data-href="{% url 'save_as_temp' protocol.id %}" data-toggle="modal" data-target="" id="saveas_template"><span>Save as Template</span></button>
+
+					  			<a href="{% url 'export_protocol' protocol.id %}"><button type="button" class="new_sub create__prj" id="ExportProtocol"><span>Export</span></button></a>
+
+				            </div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<h4>&nbsp;&nbsp;&nbsp;&nbsp;Table of Contents</h4>
+					<div class="col-md-12 grid-margin stretch-card">
+
+						<div class="tabordion">
+
+							<section id="section">
+								<input type="radio" name="sections" id="option" checked>
+								<label for="option">Title Page</label>
+					
+								<article class="title_page_article">
+								
+									<form class="title_page" method="POST" data-url="{% url 'eprotocol_dashboard' protocol.id %}" id="eprotocol_titlepage_form" >
+
+										{% csrf_token %}
+
+										<span for="id_name">Protocol Name</span>
+										<input type="text" name="name" id="id_name" class="input_nb" value="{{ protocol.name }}">
+										<small class="text-danger">{{ titlepage_form.errors.name | striptags }}</small>
+
+										<br><br>
+
+										<span for="id_name">Protocol code</span>
+										<input type="text" name="code" id="id_code" class="input_nb" value="{{ protocol.code }}">
+										<small class="text-danger">{{ titlepage_form.errors.code | striptags }}</small>
+
+										<br><br>
+
+										<span>Unique Protocol Identification Number</span> (Any unique identifier assigned to the protocol by the sponsor and required for upload into ClinicalTrials.gov. Limit: 30 characters.)
+										<input type="text" class="input_nb" name="upin" id="id_upin" value="{% if protocol.upin %} {{ protocol.upin }} {% endif %}">
+
+										<br><br>
+
+										<span>National Clinical Trial (NCT) Identified Number</span>
+										<input type="text" class="input_nb" name="nct" id="id_nct" value="{% if protocol.nct %} {{ protocol.nct }} {% endif %}">
+
+										<br><br>
+										<span>Select study type</span>
+										<select name="study_type" class="input_cn" id="id_study_type">
+								            <option value="" disabled {% if protocol.study_type == ''  %} selected {% endif %}>Select Phase</option>
+								            <option value="Observational" {% if protocol.study_type == 'Observational'  %} selected {% endif %}>Observational</option>
+								            <option value="Interventional" {% if protocol.study_type == 'Interventional'  %} selected {% endif %}>Interventional</option>
+								            <option value="Expanded Access" {% if protocol.study_type == 'Expanded Access'  %} selected {% endif %}>Expanded Access</option>
+        								</select>
+
+        								<br><br>
+
+        								<span>What is the name of the entity funding the clinical trial?</span>
+        								<select name="funding_entity" class="input_cn" id="id_funding_entity" multiple>
+        									<option value="National Cancer Institute" {% if 'National Cancer Institute' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Cancer Institute</option>
+        									<option value="National Institute of Dental and Craniofacial Research" {% if 'National Institute of Dental and Craniofacial Research' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Institute of Dental and Craniofacial Research</option>
+        									<option value="National Institute of Diabetes and Digestive and Kidney Diseases" {% if 'National Institute of Diabetes and Digestive and Kidney Diseases' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Institute of Diabetes and Digestive and Kidney Diseases</option>
+        									<option value="National Institute of Allergy and Infectious Diseases" {% if 'National Institute of Allergy and Infectious Diseases' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Institute of Allergy and Infectious Diseases</option>
+        									<option value="National Heart, Lung, and Blood Institute" {% if 'National Heart, Lung, and Blood Institute' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Heart, Lung, and Blood Institute</option>
+        									<option value="National Institute of Mental Health" {% if 'National Institute of Mental Health' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Institute of Mental Health</option>
+        									<option value="National Institute of Neurological Disorders and Stroke" {% if 'National Institute of Neurological Disorders and Stroke' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Institute of Neurological Disorders and Stroke</option>
+        									<option value="National Library of Medicine" {% if 'National Library of Medicine' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Library of Medicine</option>
+        									<option value="National Institute of Child Health and Human Development" {% if 'National Institute of Child Health and Human Development' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Institute of Child Health and Human Development</option>
+        									<option value="National Institute of General Medical Sciences" {% if 'National Institute of General Medical Sciences' in protocol.funding_entity|str_to_list %} selected {% endif %}>National Institute of General Medical Sciences</option>
+        									
+        								</select>
+
+        								<br><br>
+        								<span>What is the name of the IND/IDE Sponsor?</span>
+        								<input type="text" name="ind_sponsor" id="id_ind_sponsor" class="input_nb" value="{{ protocol.ind_sponsor }}">
+        								<br><br>
+        								Note about the importance of obtaining an IND/IDE or an FDA exemption: NIH policy requires principal investigators to obtain proper FDA approval when performing research involving human subjects and an investigational drug, biologic, or device. Please note that proper FDA approval consists of either an IND/IDE or an FDA exemption.
+
+        								<br><br>
+        								<input type="button" name="title_page_btn_name" class="btn btn-info title_page_sub_btn" value="Save Changes" disabled="true">
+
+
+									</form>
+									
+								</article>
+
+							</section>
+
+							{% for each in protocol_section %}
+
+							<section id="section{{ each.id }}">
+							    <input type="radio" name="sections" id="option{{ each.id }}">
+							    <label for="option{{ each.id }}">{{ each.sec_heading }}</label>
+							    <article style="width: 80%;">
+							      
+							      {% if each.read_only == '1' %}
+
+							      	<h3 style="display: inline;">{{ each.sec_heading }}</h3> <h4 style="display: inline;"> (Read Only) </h4>
+
+							      	{% if not each.sec_content == 'nan' %}
+
+							      		<p>{{ each.sec_content|safe }}</p>
+
+							      	{% endif %}
+
+							      {% else %}
+
+							      <h3>{{ each.sec_heading }}</h3>
+
+							      <button class="help_btn" data-url="{% url 'section_help' each.id %}" {% if each.sec_heading == 'Protocol Amendment Summary of Changes Table' %} disabled {% endif %}>Help</button> 
+
+							      <button class="template_btn" data-url="{% url 'section_template' each.id %}">Template</button>
+
+							      <button class="ref_btn" data-url="{% url 'section_ref_search' protocol.id each.id %}" data-toggle="modal" data-target="#reference_modal" data-backdrop="static" data-keyboard="false">Reference</button>
+
+							      <br><br>
+
+							      <form method="POST" data-url="{% url 'eprotocol_sections' each.id %}" data-id="{{ each.id }}" class="eProtocol_section_form">
+
+							      	{% csrf_token %}
+
+							      	<textarea name="sec_content" id="id_sec_content-{{ each.id }}" class="ckeditor" rows="10" style="width:100%;">
+										{% if each.sec_content != 'nan' %}{{ each.sec_content|safe }} {% endif %}
+									</textarea>
+
+									<br><br>
+
+									<input type="submit" value="Save" class="btn btn-info" >
+							      	
+							      </form>
+							      {% endif %}
+							      
+							    </article>
+							</section>
+
+							{% endfor %}
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<!-- Section Help/Instruction Modal -->
+				<div class="modal fade" id="section_help_modal" tabindex="-1" role="dialog" aria-labelledby="section_help_modalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+					<div class="modal-content">
+					</div>
+				  </div>
+				</div>
+
+
+				<!-- Save as Template Modal -->
+				<div class="modal fade" id="save_as_temp_modal" tabindex="-1" role="dialog" aria-labelledby="save_as_temp_modalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+					<div class="modal-content">
+					</div>
+				  </div>
+				</div>
+
+
+				<!-- Section Template Modal -->
+				<div class="modal fade" id="section_template_modal" tabindex="-1" role="dialog" aria-labelledby="section_template_modalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+					<div class="modal-content">
+					</div>
+				  </div>
+				</div>
+
+
+				<!-- Unsaved Changes -->
+				<div class="modal fade" id="unsaved_modal" tabindex="-1" role="dialog" aria-labelledby="unsaved_modalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content" style="text-align: center;">
+						<div class="modal-body">
+
+							<h4>Please save the unsaved changes</h4><br>
+							
+							<!-- <button type="submit" class="btn btn-primary">Yes</button> -->
+
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+
+						</div>
+					</div>
+				  </div>
+				</div>
+
+
+				<!-- Reference Button -->
+				<div class="modal fade" id="reference_modal" tabindex="-1" role="dialog" aria-labelledby="reference_modalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+					</div>
+				  </div>
+				</div>
+
+
+		  	</div>
+		</div>
+	</div>
+
+{% endblock %}
